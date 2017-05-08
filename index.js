@@ -28,14 +28,14 @@ restService.post('/webhook', function (req, res) {
                 var parameters = result.parameters;
                 var zone = parameters["shipping-zone"];
                 
-                  try {                                            
+                 /* try {                                            
                    const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot')
                      const sqlResult = sql.query('select FirstName from Student where id = 1');
                       console.log('sqlresult below');
                       console.log(sqlResult);
                   } catch (err) {
                         console.log('sqlerr: ' + err);
-                  } 
+                  } */
 
                 var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
 
