@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const sql = require('mssql');
 
 
 const restService = express();
@@ -26,6 +27,15 @@ restService.post('/webhook', function (req, res) {
                 var result = requestBody.result;
                 var parameters = result.parameters;
                 var zone = parameters["shipping-zone"];
+                
+                  try {
+                     const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot')
+                     const sqlResult = sql.query`select FirstName from Student where id = 1`
+                     pool.close();
+                     console.log(sqlResult);
+                  } catch (err) {
+                        // ... error checks 
+                  }
 
                 var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
 
