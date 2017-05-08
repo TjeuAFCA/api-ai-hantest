@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const restService = express();
 restService.use(bodyParser.json());
 
-restService.post('/hook', function (req, res) {
+restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
 
@@ -20,14 +20,25 @@ restService.post('/hook', function (req, res) {
             if (requestBody.result) {
                 speech = '';
 
-                if (requestBody.result.fulfillment) {
-                    speech += requestBody.result.fulfillment.speech;
-                    speech += ' ';
+                if (requestBody.result.action != "shipping.cost") {
+                    return {};
                 }
+                var result = requestBody.result;
+                var parameters = result.parameters;
+                var zone = parameters["shipping-zone"];
 
-                if (requestBody.result.action) {
-                    speech += 'action: ' + requestBody.result.action;
-                }
+                var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
+
+                var speech = "JS: The cost of shipping to " + zone + " is " + cost[zone] + " euros.";
+
+                //if (requestBody.result.fulfillment) {
+                //    speech += requestBody.result.fulfillment.speech;
+                //    speech += ' ';
+                //}
+
+                //if (requestBody.result.action) {
+                //    speech += 'action: ' + requestBody.result.action;
+                //}
             }
         }
 
