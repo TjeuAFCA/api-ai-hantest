@@ -12,6 +12,17 @@ restService.post('/webhook', function (req, res) {
 
     console.log('hook request okeja5');
 
+    const config = {
+    user: 'thomaszee',
+    password: 'Korilu5!',
+    server: 'isaschatbot.database.windows.net', // You can use 'localhost\\instance' to connect to named instance 
+    database: 'isaschatbot',
+ 
+    options: {
+        encrypt: true // Use this if you're on Windows Azure 
+    }
+}
+    
     try {
         var speech = 'empty speech';
 
@@ -36,6 +47,16 @@ restService.post('/webhook', function (req, res) {
                   } catch (err) {
                         console.log('sqlerr: ' + err);
                   } */
+                
+                async () => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await sql.query('select FirstName from Student where id = 1');
+        console.dir(result)
+    } catch (err) {
+        console.log('error in sqltry: ' + err);
+    }
+}
 
                 var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
 
