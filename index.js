@@ -46,7 +46,7 @@ restService.post('/webhook', function (req, res) {
 })
  
 sql.on('error', err => {
-    console.log(err);
+    console.log('sql error: ' + err);
 })
                 //ENDTEST
 
