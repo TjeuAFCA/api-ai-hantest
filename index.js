@@ -28,7 +28,7 @@ restService.post('/webhook', function (req, res) {
                 var parameters = result.parameters;
                 var zone = parameters["shipping-zone"];
                 
-                  try {
+                 // try {
                       sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot', err => {
                           
     new sql.Request().query('select FirstName from Student where id = 1', (err, result) => {
