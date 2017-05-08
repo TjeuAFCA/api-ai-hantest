@@ -31,8 +31,8 @@ restService.post('/webhook', function (req, res) {
                   try {
                      const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot')
                      const sqlResult = sql.query('select FirstName from Student where id = 1');
-                     pool.close();
-                     console.log(sqlResult);
+                      console.log('sqlresult below');
+                      console.log(sqlResult);
                   } catch (err) {
                         console.log('sqlerr: ' + err);
                   }
