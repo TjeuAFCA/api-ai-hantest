@@ -12,7 +12,7 @@ restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
 
-    try {
+   // try {
         var speech = 'empty speech';
 
         if (req.body) {
@@ -29,13 +29,26 @@ restService.post('/webhook', function (req, res) {
                 var zone = parameters["shipping-zone"];
                 
                   try {
-                     const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot')
+                      sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot', err => {
+                          
+    new sql.Request().query('select FirstName from Student where id = 1', (err, result) => {
+        console.dir(result)
+    })
+
+})
+
+sql.on('error', err => {
+    console.log(err);
+})
+
+                                                                
+                 /*    const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot')
                      const sqlResult = sql.query('select FirstName from Student where id = 1');
                       console.log('sqlresult below');
                       console.log(sqlResult);
                   } catch (err) {
                         console.log('sqlerr: ' + err);
-                  }
+                  } */
 
                 var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
 
