@@ -12,7 +12,7 @@ restService.post('/webhook', function (req, res) {
 
     console.log('hook request kokookkokokokokook');
 
-   // try {
+    try {
         var speech = 'empty speech';
 
         if (req.body) {
