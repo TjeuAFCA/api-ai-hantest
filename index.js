@@ -30,11 +30,11 @@ restService.post('/webhook', function (req, res) {
                 
                   try {
                      const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot')
-                     const sqlResult = sql.query`select FirstName from Student where id = 1`
+                     const sqlResult = sql.query('select FirstName from Student where id = 1');
                      pool.close();
                      console.log(sqlResult);
                   } catch (err) {
-                        // ... error checks 
+                        console.log('sqlerr: ' + err);
                   }
 
                 var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
