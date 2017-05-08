@@ -34,21 +34,26 @@ restService.post('/webhook', function (req, res) {
                 var parameters = result.parameters;
                 var zone = parameters["shipping-zone"];
                 
-                //STARTTEST
+                // TETETETTETTE
                 
-                sql.connect(config, err => { 
+                sql.connect(config, err => {
+    // ... error checks 
+ 
     // Query 
-    new sql.Request().query('select FirstName from Student where Id = 1', (err, result) => {
-        console.log('query result hieronder');
-        console.log(result);
-        console.dir(result);
+ 
+    new sql.Request().query('select 13371337 as number', (err, result) => {
+        // ... error checks 
+ 
+        console.dir(result)
     })
+ 
 })
  
 sql.on('error', err => {
-    console.log('sql error: ' + err);
+    // ... error handler 
 })
-                //ENDTEST
+                
+                // TETTETETETTET
 
                 var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
 
