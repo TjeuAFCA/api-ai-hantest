@@ -9,7 +9,7 @@ restService.use(bodyParser.json());
 
 restService.post('/webhook', function (req, res) {
 
-    console.log('hook request okeja5');
+    console.log('hook request');
 
     const config = {
     user: 'thomaszee',
@@ -39,9 +39,9 @@ restService.post('/webhook', function (req, res) {
                 sql.connect(config, err => { 
     // Query 
     new sql.Request().query('select FirstName from Student where Id = 1', (err, result) => {
-        // ... error checks 
- 
-        console.dir(result)
+        console.log('query result hieronder');
+        console.log(result);
+        console.dir(result);
     })
 })
  
