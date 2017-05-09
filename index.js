@@ -36,22 +36,15 @@ restService.post('/webhook', function (req, res) {
                 
                 // TETETETTETTE
                 
-                sql.connect(config, err => {
-    // ... error checks 
- 
-    // Query 
- 
-    new sql.Request().query('select 13371337 as number', (err, result) => {
-        // ... error checks 
- 
+               async () => {
+    try {
+        const pool = await sql.connect('mssql://username:password@localhost/database')
+        const result = await sql.query`select * from mytable where id = ${value}`
         console.dir(result)
-    })
- 
-})
- 
-sql.on('error', err => {
-    // ... error handler 
-})
+    } catch (err) {
+        console.log('errorInSqlAttempt: ', err);
+    }
+}
                 
                 // TETTETETETTET
 
