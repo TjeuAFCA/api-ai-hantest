@@ -19,6 +19,7 @@ restService.post('/webhook', function (req, res) {
 }
     
     try {
+        //test
         var speech = 'empty speech';
 
         if (req.body) {
