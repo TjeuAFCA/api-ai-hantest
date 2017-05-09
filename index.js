@@ -74,7 +74,7 @@ restService.post('/webhook', function (req, res) {
                     executeQuery("SELECT Teacher.Name FROM Teacher INNER JOIN Test ON Teacher.Id = Test.Teacher INNER JOIN Student ON Test.Class = Student.Class INNER JOIN Subject ON Test.Subject = Subject.Id WHERE Student.Id = 1 AND Subject.Name = '" + vakken + "'",
                         function (data) {
                             console.log(data);
-                            speech = "JS: Voor " + vakken + " is je " + leraar +  data.recordset[0].Name;
+                            speech = "JS: Voor " + vakken + " is je " + leraar + " " +  data.recordset[0].Name;
                             return getResultText(res, speech);
                         });
                 }
