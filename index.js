@@ -10,7 +10,7 @@ restService.use(bodyParser.json());
 restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
-
+    console.log(sql);
     const config = {
     user: 'thomaszee',
     password: 'Korilu5!',
