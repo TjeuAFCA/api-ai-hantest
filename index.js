@@ -19,37 +19,53 @@ restService.post('/webhook', function (req, res) {
         encrypt: true
     }
 }
-    // Test this 
-sql.connect(config).then(pool => {
-    // Query 
+//     // Test this 
+// sql.connect(config).then(pool => {
+//     // Query 
     
-    return pool.request()
-    .query('select * from Student')
-}).then(data => {
-    console.dir(data);
-    console.log('result!');
+//     return pool.request()
+//     .query('select * from Student')
+// }).then(data => {
+//     console.dir(data);
+//     console.log('result!');
     
-}).catch(err => {
-    console.log(err);
-    console.log('catch!');
-    // ... error checks 
-})
+// }).catch(err => {
+//     console.log(err);
+//     console.log('catch!');
+//     // ... error checks 
+// })
  
-sql.on('error', err => {
-    console.log(err);
-    // ... error handler 
-})
-sql.query('select * from Subject').then(newData => {
-    console.dir(newData);
-    console.log('newresult!');
+// sql.on('error', err => {
+//     console.log(err);
+//     // ... error handler 
+// })
+// sql.query('select * from Subject').then(newData => {
+//     console.dir(newData);
+//     console.log('newresult!');
     
-}).catch(err => {
-    console.log(err);
-    console.log('newcatch!');
-    // ... error checks 
-})
-sql.close();
-   
+// }).catch(err => {
+//     console.log(err);
+//     console.log('newcatch!');
+//     // ... error checks 
+// })
+// sql.close();
+   function getQuery(query) {
+    var conn = new sql.Connection(dbConfig);
+    
+    conn.connect().then(function () {
+        var req = new sql.Request(conn);
+        req.query(query).then(function (recordset) {
+            console.log(recordset);
+            conn.close();
+        })
+        .catch(function (err) {
+            console.log(err);
+            conn.close();
+        });        
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
 
     // test
     
@@ -72,7 +88,7 @@ sql.close();
                 var vakken = parameters["Vakken"];
     
                // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
-
+                getQuery("Select * from Student");
                 var speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 8";
 
                 //if (requestBody.result.fulfillment) {
