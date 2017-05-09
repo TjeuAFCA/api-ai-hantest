@@ -52,17 +52,17 @@ sql.on('error', err => {
             if (requestBody.result) {
                 speech = '';
 
-                if (requestBody.result.action != "shipping.cost") {
+                if (requestBody.result.action != "iSAS.mark") {
                     return {};
                 }
                 var result = requestBody.result;
                 var parameters = result.parameters;
-                var zone = parameters["shipping-zone"];
-                
+                var cijfer = parameters["Cijfer"];
+                var vakken = parameters["Vakken"];
     
-                var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
+               // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
 
-                var speech = "JS: The cost of shipping to " + zone + " is " + cost[zone] + " euros.";
+                var speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 8";
 
                 //if (requestBody.result.fulfillment) {
                 //    speech += requestBody.result.fulfillment.speech;
