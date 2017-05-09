@@ -7,6 +7,25 @@ const sql = require('mssql');
 const restService = express();
 restService.use(bodyParser.json());
 
+   function getQuery(query) {
+    var conn = new sql.Connection(dbConfig);
+    
+    conn.connect().then(function () {
+        var req = new sql.Request(conn);
+        req.query(query).then(function (recordset) {
+            console.log(recordset);
+            conn.close();
+        })
+        .catch(function (err) {
+            console.log(err);
+            conn.close();
+        });        
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+   }
+
 restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
@@ -49,23 +68,6 @@ restService.post('/webhook', function (req, res) {
 //     // ... error checks 
 // })
 // sql.close();
-   function getQuery(query) {
-    var conn = new sql.Connection(dbConfig);
-    
-    conn.connect().then(function () {
-        var req = new sql.Request(conn);
-        req.query(query).then(function (recordset) {
-            console.log(recordset);
-            conn.close();
-        })
-        .catch(function (err) {
-            console.log(err);
-            conn.close();
-        });        
-    })
-    .catch(function (err) {
-        console.log(err);
-    });
 
     // test
     
