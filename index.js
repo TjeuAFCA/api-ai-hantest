@@ -17,15 +17,32 @@ restService.post('/webhook', function (req, res) {
     database: 'isaschatbot'
 }
     // Test this 
-    try {
-        const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot?encrypt=true')
-        const result = sql.query`select * from Student`
-        console.dir(result)
-        console.log('in try');
-    } catch (err) {
-        console.log('error');
+//     try {
+//         const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot?encrypt=true')
+//         const result = sql.query`select * from Student`
+//         console.dir(result)
+//         console.log('in try');
+//     } catch (err) {
+//         console.log('error');
+//         // ... error checks 
+//     }
+    sql.connect(config, err => {
+    // ... error checks 
+        console.log('connecting');
+ 
+    // Query 
+ 
+    new sql.Request().query('select 1 as number', (err, data) => {
         // ... error checks 
-    }
+        console.log('querying');
+        console.dir(data)
+    })
+})
+ 
+sql.on('error', err => {
+    console.log('error')
+    // ... error handler 
+})
 
     // test
     
