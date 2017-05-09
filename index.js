@@ -32,7 +32,7 @@ restService.post('/webhook', function (req, res) {
  
     // Query 
  
-    new sql.Request().query('select 1 as number', (err, data) => {
+    new sql.Request().query('select * from Student', (err, data) => {
         // ... error checks 
         console.log('querying');
         console.dir(data)
