@@ -18,12 +18,13 @@ restService.use(bodyParser.json());
 
 
    function getQuery(query, callback) {
+       var data = null;
     sql.connect(config).then(function () {
         var req = new sql.Request();
         req.query(query).then(function (recordset) {
             sql.close();
            console.log('now returning');
-            return recordset;
+            data = recordset;
         })
         .catch(function (err) {
             console.log(err);
@@ -33,7 +34,7 @@ restService.use(bodyParser.json());
     .catch(function (err) {
         console.log(err);
     });
-       callback();
+       callback(data);
    }
 
 restService.post('/webhook', function (req, res) {
@@ -91,9 +92,9 @@ restService.post('/webhook', function (req, res) {
                 var vakken = parameters["Vakken"];
     
                // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
-                var mijnRecord = getQuery("Select * from Student", function(){
+               getQuery("Select * from Student", function(data){
                 console.log('record= ');
-                console.log(mijnRecord);
+                console.log(data);
                 speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 8";
                 });
                
