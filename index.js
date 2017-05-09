@@ -11,13 +11,13 @@ const config = {
     options: {
         encrypt: true
     }
-}
+};
 
 const restService = express();
 restService.use(bodyParser.json());
 
 
-function getQuery(query, callback) {
+function executeQuery(query, callback) {
     sql.connect(config).then(function () {
         var req = new sql.Request();
         req.query(query).then(function (recordset) {
@@ -34,6 +34,14 @@ function getQuery(query, callback) {
         });
 }
 
+function getResultText(text){
+    return res.json({
+        speech: text,
+        displayText: text,
+        source: 'apiai-webhook-iSAS'
+    });
+}
+
 restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
@@ -45,25 +53,24 @@ restService.post('/webhook', function (req, res) {
 
             if (requestBody.result) {
                 speech = '';
-
-                if (requestBody.result.action != "iSAS.mark") {
-                    return {};
-                }
                 var result = requestBody.result;
                 var parameters = result.parameters;
-                var cijfer = parameters["Cijfer"];
-                var vakken = parameters["Vakken"];
 
-                getQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
-                    function (data) {
-                        speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                if (requestBody.result.action == "iSAS.mark") {
+                    var cijfer = parameters["Cijfer"];
+                    var vakken = parameters["Vakken"];
 
-                        return res.json({
-                            speech: speech,
-                            displayText: speech,
-                            source: 'apiai-webhook-iSAS'
+                    executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
+                        function (data) {
+                            speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+
+                            return getResultText(speech);
                         });
-                    });
+                }
+                else{
+                    return {};
+                }
+
 
 
                 //if (requestBody.result.fulfillment) {
