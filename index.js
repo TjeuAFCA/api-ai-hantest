@@ -25,7 +25,7 @@ sql.connect(config).then(pool => {
     
     return pool.request()
     .query('select * from Student')
-    pool.close()
+//     pool.close()
 }).then(data => {
     console.dir(data);
     console.log('result!');
@@ -40,6 +40,8 @@ sql.on('error', err => {
     console.log(err);
     // ... error handler 
 })
+    
+sql.close();
    
 
     // test
