@@ -22,7 +22,7 @@ restService.use(bodyParser.json());
         var req = new sql.Request();
         req.query(query).then(function (recordset) {
             sql.close();
-           console.log('gonna return');
+           console.log(recordset);
             return recordset;
         })
         .catch(function (err) {
