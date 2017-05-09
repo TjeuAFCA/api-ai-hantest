@@ -23,9 +23,9 @@ restService.post('/webhook', function (req, res) {
 sql.connect(config).then(pool => {
     // Query 
     
-    return pool.request();
-    .query('select * from Student');
-    pool.close();
+    return pool.request()
+    .query('select * from Student')
+    pool.close()
 }).then(data => {
     console.dir(data);
     console.log('result!');
