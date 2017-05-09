@@ -18,9 +18,7 @@ restService.use(bodyParser.json());
 
 
    function getQuery(query) {
-    var conn = new sql.Connection(config);
-    
-    conn.connect().then(function () {
+    sql.connect(config).then(function () {
         var req = new sql.Request(conn);
         req.query(query).then(function (recordset) {
             console.log(recordset);
