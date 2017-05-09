@@ -34,6 +34,8 @@ restService.use(bodyParser.json());
     .catch(function (err) {
         console.log(err);
     });
+       console.log('fucking data thomas');
+       console.log(data);
        callback(data);
    }
 
