@@ -48,8 +48,6 @@ sql.query('select * from Subject').then(newData => {
     console.log('newcatch!');
     // ... error checks 
 })
-console.log('NEwdata = ');
-console.log(newData);
 sql.close();
    
 
