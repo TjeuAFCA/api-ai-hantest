@@ -23,23 +23,21 @@ restService.post('/webhook', function (req, res) {
 sql.connect(config).then(pool => {
     // Query 
     
-    return pool.request()
-    .query('select * from Student')
+    return pool.request();
+    .query('select * from Student');
+    pool.close();
 }).then(data => {
     console.dir(data);
     console.log('result!');
-     pool.close();
     
 }).catch(err => {
     console.log(err);
     console.log('catch!');
-     pool.close();
     // ... error checks 
 })
  
 sql.on('error', err => {
     console.log(err);
-     pool.close();
     // ... error handler 
 })
    
