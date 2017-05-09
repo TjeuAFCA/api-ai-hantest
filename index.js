@@ -66,6 +66,7 @@ restService.post('/webhook', function (req, res) {
                     });
 
 
+                //test
                 //if (requestBody.result.fulfillment) {
                 //    speech += requestBody.result.fulfillment.speech;
                 //    speech += ' ';
