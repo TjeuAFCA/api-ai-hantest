@@ -90,6 +90,7 @@ restService.post('/webhook', function (req, res) {
                 var parameters = result.parameters;
                 var cijfer = parameters["Cijfer"];
                 var vakken = parameters["Vakken"];
+                speech = 'dikke kut';
     
                // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
                getQuery("Select * from Student", function(data){
