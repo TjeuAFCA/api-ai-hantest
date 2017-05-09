@@ -10,7 +10,6 @@ restService.use(bodyParser.json());
 restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
-    console.log(sql);
     const config = {
     user: 'thomaszee',
     password: 'Korilu5!',
@@ -19,8 +18,8 @@ restService.post('/webhook', function (req, res) {
 }
     // Test this 
     try {
-        const pool = await sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot?encrypt=true')
-        const result = await sql.query`select * from Student`
+        const pool = sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot?encrypt=true')
+        const result = sql.query`select * from Student`
         console.dir(result)
         console.log('in try');
     } catch (err) {
