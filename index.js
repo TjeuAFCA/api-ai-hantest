@@ -56,16 +56,16 @@ restService.post('/webhook', function (req, res) {
                 var parameters = result.parameters;
                 var cijfer = parameters["Cijfer"];
                 var vakken = parameters["Vakken"];
-                speech = 'dikke kut';
     
                // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
-               getQuery("Select * from Student", function(data){
+               getQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ", 
+                        function(data){
                 speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 8";
                    
                 return res.json({
                     speech: speech,
                     displayText: speech,
-                    source: 'apiai-webhook-sample'
+                    source: 'apiai-webhook-iSAS'
                 });
                 });
                
