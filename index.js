@@ -39,42 +39,8 @@ restService.use(bodyParser.json());
 
 restService.post('/webhook', function (req, res) {
 
-    console.log('hook request');
-//     // Test this 
-// sql.connect(config).then(pool => {
-//     // Query 
-    
-//     return pool.request()
-//     .query('select * from Student')
-// }).then(data => {
-//     console.dir(data);
-//     console.log('result!');
-    
-// }).catch(err => {
-//     console.log(err);
-//     console.log('catch!');
-//     // ... error checks 
-// })
- 
-// sql.on('error', err => {
-//     console.log(err);
-//     // ... error handler 
-// })
-// sql.query('select * from Subject').then(newData => {
-//     console.dir(newData);
-//     console.log('newresult!');
-    
-// }).catch(err => {
-//     console.log(err);
-//     console.log('newcatch!');
-//     // ... error checks 
-// })
-// sql.close();
-
-    // test
-    
+    console.log('hook request');    
     try {
-        //test
         var speech = 'empty speech';
 
         if (req.body) {
@@ -94,9 +60,13 @@ restService.post('/webhook', function (req, res) {
     
                // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
                getQuery("Select * from Student", function(data){
-                console.log('record= ');
-                console.log(data);
                 speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 8";
+                   
+                return res.json({
+                    speech: speech,
+                    displayText: speech,
+                    source: 'apiai-webhook-sample'
+                });
                 });
                
 
@@ -113,11 +83,6 @@ restService.post('/webhook', function (req, res) {
 
         console.log('result: ', speech);
 
-        return res.json({
-            speech: speech,
-            displayText: speech,
-            source: 'apiai-webhook-sample'
-        });
     } catch (err) {
         console.error("Can't process request", err);
 
