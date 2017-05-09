@@ -22,7 +22,7 @@ restService.use(bodyParser.json());
         var req = new sql.Request();
         req.query(query).then(function (recordset) {
             sql.close();
-           console.log(recordset);
+           console.log('now returning');
             return recordset;
         })
         .catch(function (err) {
@@ -90,8 +90,9 @@ restService.post('/webhook', function (req, res) {
                 var vakken = parameters["Vakken"];
     
                // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
-                var record = getQuery("Select * from Student");
-                console.log(record);
+                var mijnRecord = getQuery("Select * from Student");
+                console.log('record= ');
+                console.log(mijnRecord);
                 var speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 8";
 
                 //if (requestBody.result.fulfillment) {
