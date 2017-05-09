@@ -34,20 +34,7 @@ restService.post('/webhook', function (req, res) {
                 var parameters = result.parameters;
                 var zone = parameters["shipping-zone"];
                 
-                // TETETETTETTE
-                
-               async () => {
-    try {
-        const pool = await sql.connect('mssql://username:password@localhost/database')
-        const result = await sql.query`select * from mytable where id = ${value}`
-        console.dir(result)
-    } catch (err) {
-        console.log('errorInSqlAttempt: ', err);
-    }
-}
-                
-                // TETTETETETTET
-
+    
                 var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
 
                 var speech = "JS: The cost of shipping to " + zone + " is " + cost[zone] + " euros.";
