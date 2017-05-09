@@ -34,7 +34,7 @@ function executeQuery(query, callback) {
         });
 }
 
-function getResultText(text){
+function getResultText(res, text){
     return res.json({
         speech: text,
         displayText: text,
@@ -64,7 +64,7 @@ restService.post('/webhook', function (req, res) {
                         function (data) {
                             speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
 
-                            return getResultText(speech);
+                            return getResultText(res, speech);
                         });
                 }
                 else{
