@@ -18,13 +18,13 @@ restService.use(bodyParser.json());
 
 
    function getQuery(query, callback) {
-       var data = null;
     sql.connect(config).then(function () {
         var req = new sql.Request();
         req.query(query).then(function (recordset) {
             sql.close();
-           console.log('now returning');
-            data = recordset;
+             console.log('fucking data thomas');
+               console.log(data);
+        callback(recordset);
         })
         .catch(function (err) {
             console.log(err);
@@ -34,9 +34,7 @@ restService.use(bodyParser.json());
     .catch(function (err) {
         console.log(err);
     });
-       console.log('fucking data thomas');
-       console.log(data);
-       callback(data);
+           console.log('now returning');
    }
 
 restService.post('/webhook', function (req, res) {
