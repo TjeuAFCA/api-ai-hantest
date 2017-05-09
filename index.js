@@ -83,9 +83,6 @@ restService.post('/webhook', function (req, res) {
                 //}
             }
         }
-
-        console.log('result: ', speech);
-
     } catch (err) {
         console.error("Can't process request", err);
 
