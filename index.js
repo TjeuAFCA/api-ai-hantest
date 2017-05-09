@@ -23,7 +23,7 @@ restService.use(bodyParser.json());
         req.query(query).then(function (recordset) {
             sql.close();
              console.log('fucking data thomas');
-               console.log(data);
+               console.log(recordset);
         callback(recordset);
         })
         .catch(function (err) {
