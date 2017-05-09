@@ -22,9 +22,9 @@ sql.connect(config).then(pool => {
     
     return pool.request()
     .query('select * from Student')
-}).then(result => {
-    console.dir(result);
-    console.log('result!;);
+}).then(data => {
+    console.dir(data);
+    console.log('result!');
     
 }).catch(err => {
     console.log('catch!');
