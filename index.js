@@ -40,7 +40,9 @@ sql.on('error', err => {
     console.log(err);
     // ... error handler 
 })
-    
+var newData = sql.query('select * from Student');
+console.log('NEwdata = ');
+console.log(newData);
 sql.close();
    
 
