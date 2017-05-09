@@ -21,8 +21,9 @@ restService.use(bodyParser.json());
     sql.connect(config).then(function () {
         var req = new sql.Request();
         req.query(query).then(function (recordset) {
-            return recordset;
             sql.close();
+           console.log('gonna return');
+            return recordset;
         })
         .catch(function (err) {
             console.log(err);
