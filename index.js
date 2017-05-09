@@ -25,7 +25,6 @@ sql.connect(config).then(pool => {
     
     return pool.request()
     .query('select * from Student')
-//     pool.close()
 }).then(data => {
     console.dir(data);
     console.log('result!');
@@ -40,7 +39,15 @@ sql.on('error', err => {
     console.log(err);
     // ... error handler 
 })
-var newData = sql.query('select * from Student');
+sql.query('select * from Subject').then(newData => {
+    console.dir(newData);
+    console.log('newresult!');
+    
+}).catch(err => {
+    console.log(err);
+    console.log('newcatch!');
+    // ... error checks 
+})
 console.log('NEwdata = ');
 console.log(newData);
 sql.close();
