@@ -3,9 +3,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sql = require('mssql');
+    const config = {
+    user: 'thomaszee',
+    password: 'Korilu5!',
+    server: 'isaschatbot.database.windows.net', // You can use 'localhost\\instance' to connect to named instance 
+    database: 'isaschatbot',
+        options: {
+        encrypt: true
+    }
+    }
 
 const restService = express();
 restService.use(bodyParser.json());
+
 
    function getQuery(query) {
     var conn = new sql.Connection(dbConfig);
@@ -29,15 +39,6 @@ restService.use(bodyParser.json());
 restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
-    const config = {
-    user: 'thomaszee',
-    password: 'Korilu5!',
-    server: 'isaschatbot.database.windows.net', // You can use 'localhost\\instance' to connect to named instance 
-    database: 'isaschatbot',
-        options: {
-        encrypt: true
-    }
-}
 //     // Test this 
 // sql.connect(config).then(pool => {
 //     // Query 
