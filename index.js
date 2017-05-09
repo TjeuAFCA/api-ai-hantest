@@ -60,7 +60,8 @@ restService.post('/webhook', function (req, res) {
                // var cost = { 'Europe': 100, 'North America': 200, 'South America': 300, 'Asia': 400, 'Africa': 500 }
                getQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ", 
                         function(data){
-                speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 8";
+                   console.log(data);
+                speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een 10";
                    
                 return res.json({
                     speech: speech,
