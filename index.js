@@ -17,6 +17,19 @@ restService.post('/webhook', function (req, res) {
     server: 'isaschatbot.database.windows.net', // You can use 'localhost\\instance' to connect to named instance 
     database: 'isaschatbot'
 }
+    // Test this 
+    async () => {
+    try {
+        const pool = await sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot?encrypt=true')
+        const result = await sql.query`select * from Student`
+        console.dir(result)
+        console.log('in try');
+    } catch (err) {
+        console.log('error');
+        // ... error checks 
+    }
+}
+    // tesssst
     
     try {
         //test
