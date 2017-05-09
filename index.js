@@ -18,7 +18,6 @@ restService.post('/webhook', function (req, res) {
     database: 'isaschatbot'
 }
     // Test this 
-    async () => {
     try {
         const pool = await sql.connect('mssql://thomaszee:Korilu5!@isaschatbot.database.windows.net/isaschatbot?encrypt=true')
         const result = await sql.query`select * from Student`
@@ -28,7 +27,7 @@ restService.post('/webhook', function (req, res) {
         console.log('error');
         // ... error checks 
     }
-}
+
     // tesssst
     
     try {
