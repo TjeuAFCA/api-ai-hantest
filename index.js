@@ -19,14 +19,14 @@ restService.use(bodyParser.json());
 
    function getQuery(query) {
     sql.connect(config).then(function () {
-        var req = new sql.Request(conn);
+        var req = new sql.Request();
         req.query(query).then(function (recordset) {
             console.log(recordset);
-            conn.close();
+            sql.close();
         })
         .catch(function (err) {
             console.log(err);
-            conn.close();
+            sql.close();
         });        
     })
     .catch(function (err) {
