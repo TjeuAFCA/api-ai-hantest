@@ -28,17 +28,21 @@ sql.connect(config).then(pool => {
 }).then(data => {
     console.dir(data);
     console.log('result!');
+     pool.close();
     
 }).catch(err => {
     console.log(err);
     console.log('catch!');
+     pool.close();
     // ... error checks 
 })
  
 sql.on('error', err => {
     console.log(err);
+     pool.close();
     // ... error handler 
 })
+   
 
     // test
     
