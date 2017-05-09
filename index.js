@@ -14,7 +14,10 @@ restService.post('/webhook', function (req, res) {
     user: 'thomaszee',
     password: 'Korilu5!',
     server: 'isaschatbot.database.windows.net', // You can use 'localhost\\instance' to connect to named instance 
-    database: 'isaschatbot'
+    database: 'isaschatbot',
+        options: {
+        encrypt: true
+    }
 }
     // Test this 
 sql.connect(config).then(pool => {
