@@ -11,13 +11,13 @@ const config = {
     options: {
         encrypt: true
     }
-}
+};
 
 const restService = express();
 restService.use(bodyParser.json());
 
 
-function getQuery(query, callback) {
+function executeQuery(query, callback) {
     sql.connect(config).then(function () {
         var req = new sql.Request();
         req.query(query).then(function (recordset) {
@@ -34,6 +34,14 @@ function getQuery(query, callback) {
         });
 }
 
+function getResultText(res, text){
+    return res.json({
+        speech: text,
+        displayText: text,
+        source: 'apiai-webhook-iSAS'
+    });
+}
+
 restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
@@ -45,25 +53,36 @@ restService.post('/webhook', function (req, res) {
 
             if (requestBody.result) {
                 speech = '';
-
-                if (requestBody.result.action != "iSAS.mark") {
-                    return {};
-                }
                 var result = requestBody.result;
                 var parameters = result.parameters;
-                var cijfer = parameters["Cijfer"];
-                var vakken = parameters["Vakken"];
 
-                getQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
-                    function (data) {
-                        speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                if (requestBody.result.action == "iSAS.mark") {
+                    var cijfer = parameters["Cijfer"];
+                    var vakken = parameters["Vakken"];
 
-                        return res.json({
-                            speech: speech,
-                            displayText: speech,
-                            source: 'apiai-webhook-iSAS'
+                    executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
+                        function (data) {
+                            speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+
+                            return getResultText(res, speech);
                         });
-                    });
+                }
+                else if(requestBody.result.action == "iSAS.teacher"){
+                    var leraar = parameters["leraar"];
+                    var vakken = parameters["Vakken"];
+
+                    executeQuery("SELECT Teacher.Name FROM Teacher INNER JOIN Test ON Teacher.Id = Test.Teacher INNER JOIN Student ON Test.Class = Student.Class INNER JOIN Subject ON Test.Subject = Subject.Id WHERE Student.Id = 1 AND Subject.Name = '" + vakken + "'",
+                        function (data) {
+                            console.log(data);
+                            console.log('test');
+                            speech = "Voor " + vakken + " is je " + leraar + " " +  data.recordset[0].Name;
+                            return getResultText(res, speech);
+                        });
+                }
+                else{
+                    return {};
+                }
+
 
 
                 //test
@@ -77,9 +96,6 @@ restService.post('/webhook', function (req, res) {
                 //}
             }
         }
-
-        console.log('result: ', speech);
-
     } catch (err) {
         console.error("Can't process request", err);
 
