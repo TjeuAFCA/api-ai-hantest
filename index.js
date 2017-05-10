@@ -62,7 +62,7 @@ restService.post('/webhook', function (req, res) {
 
                     executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
                         function (data) {
-                            speech = "JS: Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                            speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
 
                             return getResultText(res, speech);
                         });
@@ -75,7 +75,7 @@ restService.post('/webhook', function (req, res) {
                         function (data) {
                             console.log(data);
                             console.log('test');
-                            speech = "JS: Voor " + vakken + " is je " + leraar + " " +  data.recordset[0].Name;
+                            speech = "Voor " + vakken + " is je " + leraar + " " +  data.recordset[0].Name;
                             return getResultText(res, speech);
                         });
                 }
