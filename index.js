@@ -52,6 +52,7 @@ function getSuggestion(query, propertyName, res) {
                     speech = "Bedoelde je misschien ";
                     console.log("teeeest");
                     res.contexts.paramaters.Vakken = "OOSE OOAD";
+                    console.log(res.contexts.paramaters.Vakken);
                     for (var i = 0; i < data.recordset.length; i++) {
                         speech += data.recordset[i][propertyName];
 
