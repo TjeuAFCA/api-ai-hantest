@@ -47,9 +47,13 @@ function getSuggestion(query){
     executeQuery(query,
         function (data) {
             if(data.recordset[0]){
-               speech = "Bedoelde je misschien " + data.recordset[0] + "?";
+                console.log('in the if getsuggestion');
+
+                speech = "Bedoelde je misschien " + data.recordset[0] + "?";
             }
             else{
+                console.log('in the else getsuggestion');
+
                 speech = "Abcdefghijklmnopqrstuvwxyz"
             }
 
@@ -78,9 +82,12 @@ restService.post('/webhook', function (req, res) {
                     executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
                         function (data) {
                             if(data.recordset[0]){
+                                console.log('in the if');
+
                                 speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
                             }
                             else{
+                                console.log('in the else');
                                 speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'");
                             }
 
