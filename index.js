@@ -36,7 +36,7 @@ function executeQuery(query, callback) {
 
 function getResultText(res, text) {
     console.log('res =  ');
-    console.log(res.socket.body);
+    console.log(Object.getOwnPropertyNames(res.socket));
     return res.json({
         speech: text,
         displayText: text,
