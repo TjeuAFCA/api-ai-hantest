@@ -54,7 +54,7 @@ function getSuggestion(query, res){
                         if(i == data.recordset.length - 1){
                             speech += "of ";
                         }
-                        speech += data.recordset[i];
+                        speech += data.recordset[i].Name;
                         if(i !== data.recordset.length - 1){
                             speech += ", ";
                         }
