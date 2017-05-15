@@ -64,7 +64,7 @@ restService.post('/webhook', function (req, res) {
                         function (data) {
                             console.log('Tjeu the data is = ');
                             console.log(data);
-                            if(data.recordset){
+                            if(data.recordset !== null){
                                 console.log("joehoe in here");
                                 speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
                             }
