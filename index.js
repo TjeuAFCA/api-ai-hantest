@@ -42,6 +42,21 @@ function getResultText(res, text){
     });
 }
 
+function getSuggestion(query){
+    var speech = "";
+    executeQuery(query,
+        function (data) {
+            if(data.recordset[0]){
+               speech = "Bedoelde je misschien " + data.recordset[0] + "?";
+            }
+            else{
+                speech = "Abcdefghijklmnopqrstuvwxyz"
+            }
+
+            return speech
+        });
+}
+
 restService.post('/webhook', function (req, res) {
 
     console.log('hook request');
@@ -62,14 +77,11 @@ restService.post('/webhook', function (req, res) {
 
                     executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
                         function (data) {
-                            console.log('Tjeu the data is = ');
-                            console.log(data);
                             if(data.recordset[0]){
-                                console.log("joehoe in here");
                                 speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
                             }
                             else{
-                                console.log('mweh mweh mweh');
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'");
                             }
 
                             return getResultText(res, speech);
