@@ -50,7 +50,7 @@ function getSuggestion(query, propertyName, res) {
             if (data.recordset[0]) {
                 if (data.recordset.length > 1) {
                     speech = "Bedoelde je misschien ";
-
+                    res.contexts.paramaters.Vakken = "OOSE OOAD";
                     for (var i = 0; i < data.recordset.length; i++) {
                         speech += data.recordset[i][propertyName];
 
