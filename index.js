@@ -50,6 +50,7 @@ function getSuggestion(query, res){
             if(data.recordset[0]){
                 if(data.recordset.length > 1){
                     speech = "Bedoelde je misschien ";
+                    console.log(data.recordset);
                     for(var i = 0; i < data.recordset.length; i++){
                         if(i == data.recordset.length - 1){
                             speech += "of ";
