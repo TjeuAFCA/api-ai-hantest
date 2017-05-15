@@ -34,7 +34,7 @@ function executeQuery(query, callback) {
         });
 }
 
-function getResultText(res, text){
+function getResultText(res, text) {
     return res.json({
         speech: text,
         displayText: text,
@@ -42,34 +42,30 @@ function getResultText(res, text){
     });
 }
 
-function getSuggestion(query, res){
+function getSuggestion(query, res) {
     console.log(query);
     var speech = "";
     executeQuery(query,
         function (data) {
-            if(data.recordset[0]){
-                if(data.recordset.length > 1){
+            if (data.recordset[0]) {
+                if (data.recordset.length > 1) {
                     speech = "Bedoelde je misschien ";
                     console.log(data.recordset);
-                    for(var i = 0; i < data.recordset.length; i++){
-                        if(i == data.recordset.length - 1){
-                            speech += "of ";
-                        }
+                    for (var i = 0; i < data.recordset.length; i++) {
                         speech += data.recordset[i].Name;
-                        if(i !== data.recordset.length - 1){
+                        if (i !== data.recordset.length - 1 && i !== data.recordset.length - 2) {
                             speech += ", ";
                         }
-
+                        else if (i == data.recordset.length - 2) {
+                            speech += " of ";
+                        }
                     }
-                    data.recordset.forEach(function(subject){
-                        speech += subject;
-                    })
                 }
-                else{
+                else {
                     speech = "Bedoelde je misschien " + data.recordset[0].Name + "?";
                 }
             }
-            else{
+            else {
                 speech = "Sorry, deze vraag kan ik niet voor je beantwoorden.."
             }
 
@@ -97,16 +93,16 @@ restService.post('/webhook', function (req, res) {
 
                     executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
                         function (data) {
-                            if(data.recordset[0]){
+                            if (data.recordset[0]) {
                                 speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
                                 return getResultText(res, speech);
                             }
-                            else{
+                            else {
                                 speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", res);
                             }
                         });
                 }
-                else if(requestBody.result.action == "iSAS.teacher"){
+                else if (requestBody.result.action == "iSAS.teacher") {
                     var leraar = parameters["leraar"];
                     var vakken = parameters["Vakken"];
 
@@ -114,14 +110,13 @@ restService.post('/webhook', function (req, res) {
                         function (data) {
                             console.log(data);
                             console.log('test');
-                            speech = "Voor " + vakken + " is je " + leraar + " " +  data.recordset[0].Name;
+                            speech = "Voor " + vakken + " is je " + leraar + " " + data.recordset[0].Name;
                             return getResultText(res, speech);
                         });
                 }
-                else{
+                else {
                     return {};
                 }
-
 
 
                 //if (requestBody.result.fulfillment) {
