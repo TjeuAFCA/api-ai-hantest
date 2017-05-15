@@ -42,7 +42,7 @@ function getResultText(res, text) {
     });
 }
 
-function getSuggestion(query, res) {
+function getSuggestion(query, propertyName, res) {
     console.log(query);
     var speech = "";
     executeQuery(query,
@@ -50,9 +50,10 @@ function getSuggestion(query, res) {
             if (data.recordset[0]) {
                 if (data.recordset.length > 1) {
                     speech = "Bedoelde je misschien ";
-                    console.log(data.recordset);
+
                     for (var i = 0; i < data.recordset.length; i++) {
-                        speech += data.recordset[i].Name;
+                        speech += data.recordset[i][propertyName];
+
                         if (i !== data.recordset.length - 1 && i !== data.recordset.length - 2) {
                             speech += ", ";
                         }
@@ -60,9 +61,10 @@ function getSuggestion(query, res) {
                             speech += " of ";
                         }
                     }
+                    speech += "?";
                 }
                 else {
-                    speech = "Bedoelde je misschien " + data.recordset[0].Name + "?";
+                    speech = "Bedoelde je misschien " + data.recordset[0][propertyName] + "?";
                 }
             }
             else {
@@ -98,7 +100,7 @@ restService.post('/webhook', function (req, res) {
                                 return getResultText(res, speech);
                             }
                             else {
-                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", res);
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res);
                             }
                         });
                 }
