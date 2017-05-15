@@ -36,9 +36,9 @@ function executeQuery(query, callback) {
 
 function getResultText(res, text) {
     console.log('res =  ');
-    //console.log(res.req.body.result.contexts.parameters.Vakken);
+    console.log(res.req.body.result.contexts[0].parameters.Vakken);
     console.log("NAMES ARE");
-    console.log(Object.getOwnPropertyNames(res.req.body.result.contexts[0]));
+    console.log(Object.getOwnPropertyNames(res.req.body.result.contexts[0].parameters));
     return res.json({
         speech: text,
         displayText: text,
