@@ -35,10 +35,6 @@ function executeQuery(query, callback) {
 }
 
 function getResultText(res, text) {
-    console.log('res =  ');
-    console.log(res.req.body.result.contexts[0].parameters.Vakken);
-    console.log("NAMES ARE");
-    console.log(Object.getOwnPropertyNames(res.req.body.result.contexts[0].parameters));
     return res.json({
         speech: text,
         displayText: text,
@@ -53,7 +49,8 @@ function getSuggestion(query, propertyName, res) {
             if (data.recordset[0]) {
                 if (data.recordset.length > 1) {
                     speech = "Bedoelde je misschien ";
-                    res.contexts.paramaters.Vakken = "OOSE OOAD";
+                    res.req.body.result.contexts[0].parameters.Vakken = "OOSE OOAD";
+
                     for (var i = 0; i < data.recordset.length; i++) {
                         speech += data.recordset[i][propertyName];
 
