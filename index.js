@@ -62,6 +62,8 @@ restService.post('/webhook', function (req, res) {
 
                     executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
                         function (data) {
+                            console.log('Tjeu the data is = ');
+                            console.log(data);
                             speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
 
                             return getResultText(res, speech);
