@@ -64,7 +64,13 @@ restService.post('/webhook', function (req, res) {
                         function (data) {
                             console.log('Tjeu the data is = ');
                             console.log(data);
-                            speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                            if(data.recordset){
+                                console.log("joehoe in here");
+                                speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                            }
+                            else{
+                                console.log('mweh mweh mweh');
+                            }
 
                             return getResultText(res, speech);
                         });
