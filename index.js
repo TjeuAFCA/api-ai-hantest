@@ -43,16 +43,13 @@ function getResultText(res, text) {
 }
 
 function getSuggestion(query, propertyName, res) {
-    console.log(query);
     var speech = "";
     executeQuery(query,
         function (data) {
             if (data.recordset[0]) {
                 if (data.recordset.length > 1) {
                     speech = "Bedoelde je misschien ";
-                    console.log("teeeest");
                     res.contexts.paramaters.Vakken = "OOSE OOAD";
-                    console.log(res);
                     for (var i = 0; i < data.recordset.length; i++) {
                         speech += data.recordset[i][propertyName];
 
@@ -102,6 +99,8 @@ restService.post('/webhook', function (req, res) {
                                 return getResultText(res, speech);
                             }
                             else {
+                                console.log(req);
+                                console.log(res);
                                 speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res);
                             }
                         });
