@@ -48,8 +48,8 @@ function getSuggestion(query, res){
         function (data) {
             if(data.recordset[0]){
                 console.log('in the if getsuggestion');
-
-                speech = "Bedoelde je misschien " + data.recordset[0] + "?";
+                console.log(data);
+                speech = "Bedoelde je misschien " + data.recordset[0].Name + "?";
             }
             else{
                 console.log('in the else getsuggestion');
