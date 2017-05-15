@@ -42,7 +42,7 @@ function getResultText(res, text){
     });
 }
 
-function getSuggestion(query){
+function getSuggestion(query, res){
     var speech = "";
     executeQuery(query,
         function (data) {
@@ -57,7 +57,7 @@ function getSuggestion(query){
                 speech = "Abcdefghijklmnopqrstuvwxyz"
             }
 
-            return speech
+            return getResultText(res, speech);
         });
 }
 
@@ -85,13 +85,12 @@ restService.post('/webhook', function (req, res) {
                                 console.log('in the if');
 
                                 speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                                return getResultText(res, speech);
                             }
                             else{
                                 console.log('in the else');
-                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'");
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", res);
                             }
-                            console.log(speech);
-                            return getResultText(res, speech);
                         });
                 }
                 else if(requestBody.result.action == "iSAS.teacher"){
