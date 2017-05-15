@@ -90,7 +90,7 @@ restService.post('/webhook', function (req, res) {
                                 console.log('in the else');
                                 speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'");
                             }
-
+                            console.log(speech);
                             return getResultText(res, speech);
                         });
                 }
