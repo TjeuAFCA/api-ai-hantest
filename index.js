@@ -36,7 +36,7 @@ function executeQuery(query, callback) {
 
 function getResultText(res, text) {
     console.log('res =  ');
-    console.log(res);
+    console.log(Object.getOwnPropertyNames(res));
     return res.json({
         speech: text,
         displayText: text,
