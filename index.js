@@ -43,18 +43,33 @@ function getResultText(res, text){
 }
 
 function getSuggestion(query, res){
+    console.log(query);
     var speech = "";
     executeQuery(query,
         function (data) {
             if(data.recordset[0]){
-                console.log('in the if getsuggestion');
-                console.log(data);
-                speech = "Bedoelde je misschien " + data.recordset[0].Name + "?";
+                if(data.recordset.length > 1){
+                    speech = "Bedoelde je misschien ";
+                    for(var i = 0; i < data.recordset.length; i++){
+                        if(i == data.recordset.length - 1){
+                            speech += "of ";
+                        }
+                        speech += data.recordset[i];
+                        if(i !== data.recordset.length - 1){
+                            speech += ", ";
+                        }
+
+                    }
+                    data.recordset.forEach(function(subject){
+                        speech += subject;
+                    })
+                }
+                else{
+                    speech = "Bedoelde je misschien " + data.recordset[0].Name + "?";
+                }
             }
             else{
-                console.log('in the else getsuggestion');
-
-                speech = "Abcdefghijklmnopqrstuvwxyz"
+                speech = "Sorry, deze vraag kan ik niet voor je beantwoorden.."
             }
 
             return getResultText(res, speech);
@@ -82,13 +97,10 @@ restService.post('/webhook', function (req, res) {
                     executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
                         function (data) {
                             if(data.recordset[0]){
-                                console.log('in the if');
-
                                 speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
                                 return getResultText(res, speech);
                             }
                             else{
-                                console.log('in the else');
                                 speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", res);
                             }
                         });
