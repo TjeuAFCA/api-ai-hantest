@@ -51,12 +51,13 @@ function getResultText(res, text, context) {
             source: 'apiai-webhook-iSAS'
         }
     }
-    console.log(response);
     return res.json(response);
 }
 
 function getContext(res, propertyName, replacement){
     var context =  res.req.body.result.contexts[0];
+    console.log('THIS IS THE CONTEXT');
+    console.log( res.req.body.result.contexts[0]);
     context.parameters[propertyName] = replacement;
     return [context];
 }
