@@ -125,7 +125,7 @@ restService.post('/webhook', function (req, res) {
                         });
                 }
                 else if (requestBody.result.action == "iSAS.teacher") {
-                    var leraar = parameters["leraar"];
+                    var leraar = parameters["Leraar"];
                     var vakken = parameters["Vakken"];
 
                     executeQuery("SELECT Teacher.Name FROM Teacher INNER JOIN Test ON Teacher.Id = Test.Teacher INNER JOIN Student ON Test.Class = Student.Class INNER JOIN Subject ON Test.Subject = Subject.Id WHERE Student.Id = 1 AND Subject.Name = '" + vakken + "'",
