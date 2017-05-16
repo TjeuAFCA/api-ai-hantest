@@ -35,6 +35,10 @@ function executeQuery(query, callback) {
 }
 
 function getResultText(res, text) {
+    console.log("CHECK THIS");
+    console.log(Object.getOwnPropertyNames(res));
+    console.log("CONTEXTOUT");
+    console.log(res.contextOut);
     return res.json({
         speech: text,
         displayText: text,
