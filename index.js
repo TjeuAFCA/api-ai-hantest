@@ -158,10 +158,9 @@ restService.post('/webhook', function (req, res) {
                     executeQuery("SELECT e.DateTime, e.Name FROM Exam e INNER JOIN Class c ON e.Class = c.Id INNER JOIN Student s ON c.Id = s.Class INNER JOIN Subject su ON su.Id = e.Subject WHERE s.Id = 1 AND su.Name = '" + vakken + "'",
                         function (data) {
                             if (data.recordset[0]) {
-                                var examDate = new Date();
-                                var time = examDate.parse(data.recordset[0].DateTime);
-                                examDate = new Date(time);
-                                var examDate = examDate.getDate() + "-" + examDate.getMonth() + "-" + examDate.getFullYear() + " om " + examDate.getHours() + ":" + examDate.getMinutes() + " uur";
+                                var time = Date.parse(data.recordset[0].DateTime);
+                                var examDate = new Date(time);
+                                examDate = examDate.getDate() + "-" + examDate.getMonth() + "-" + examDate.getFullYear() + " om " + examDate.getHours() + ":" + examDate.getMinutes() + " uur";
                                 speech = "Je toets (" +  data.recordset[0].Name + ") voor " + vakken + " is op " + examDate;
                                 return getResultText(res, speech);
                             }
