@@ -130,8 +130,13 @@ restService.post('/webhook', function (req, res) {
 
                     executeQuery("SELECT Teacher.Name FROM Teacher INNER JOIN Test ON Teacher.Id = Test.Teacher INNER JOIN Student ON Test.Class = Student.Class INNER JOIN Subject ON Test.Subject = Subject.Id WHERE Student.Id = 1 AND Subject.Name = '" + vakken + "'",
                         function (data) {
-                            speech = "Voor " + vakken + " is je " + leraar + " " + data.recordset[0].Name;
-                            return getResultText(res, speech);
+                            if (data.recordset[0]) {
+                                speech = "Voor " + vakken + " is je " + leraar + " " + data.recordset[0].Name;
+                                return getResultText(res, speech);
+                            }
+                            else {
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
+                            }
                         });
                 }
                 else {
