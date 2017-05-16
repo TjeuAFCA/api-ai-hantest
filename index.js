@@ -41,9 +41,11 @@ function getResultText(res, text) {
     //console.log(res.contextOut);
     //contextOut: [{"name":"cijfer-context", "lifespan":5, "parameters":{"city":"Rome"}}],
 
+
     return res.json({
         speech: text,
         displayText: text,
+        contextOut: [{ "name": "cijfer-context", "parameters": { "Vakken.original": "ooad", "Cijfer": [ "cijfer" ], "Cijfer.original": "cijfer", "Vakken": "OOSE OOAD" }, "lifespan": 5 }],
         source: 'apiai-webhook-iSAS'
     });
 }
