@@ -63,7 +63,7 @@ function getContext(res, propertyName, replacement){
     return context;
 }
 
-function getSuggestion(query, propertyName, res) {
+function getSuggestion(query, propertyName, res, action) {
     var speech = "";
     var context = null;
     executeQuery(query,
@@ -86,7 +86,7 @@ function getSuggestion(query, propertyName, res) {
                 }
                 else {
                     speech = "Bedoelde je misschien " + data.recordset[0][propertyName] + "?";
-                    context = getContext(res, propertyName, data.recordset[0][propertyName]);
+                    context = getContext(res, action, data.recordset[0][propertyName]);
                 }
             }
             else {
@@ -122,7 +122,7 @@ restService.post('/webhook', function (req, res) {
                                 return getResultText(res, speech);
                             }
                             else {
-                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res);
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
                             }
                         });
                 }
