@@ -119,7 +119,7 @@ restService.post('/webhook', function (req, res) {
                                 return getResultText(res, speech);
                             }
                             else {
-                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN SubjectFulfillment t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
                             }
                         });
                 }
@@ -127,14 +127,14 @@ restService.post('/webhook', function (req, res) {
                     var leraar = parameters["Leraar"];
                     var vakken = parameters["Vakken"];
 
-                    executeQuery("SELECT Teacher.Name FROM Teacher INNER JOIN Test ON Teacher.Id = Test.Teacher INNER JOIN Student ON Test.Class = Student.Class INNER JOIN Subject ON Test.Subject = Subject.Id WHERE Student.Id = 1 AND Subject.Name = '" + vakken + "'",
+                    executeQuery("SELECT Teacher.Name FROM Teacher INNER JOIN SubjectFulfillment ON Teacher.Id = SubjectFulfillment.Teacher INNER JOIN Student ON SubjectFulfillment.Class = Student.Class INNER JOIN Subject ON SubjectFulfillment.Subject = Subject.Id WHERE Student.Id = 1 AND Subject.Name = '" + vakken + "'",
                         function (data) {
                             if (data.recordset[0]) {
                                 speech = "Voor " + vakken + " is je " + leraar + " " + data.recordset[0].Name;
                                 return getResultText(res, speech);
                             }
                             else {
-                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN SubjectFulfillment t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
                             }
                         });
                 }
@@ -149,6 +149,21 @@ restService.post('/webhook', function (req, res) {
                             }
                             else {
                                 speech = getSuggestion("SELECT t.Name FROM Teacher t WHERE t.Name LIKE '%" + leraar + "%'", 'Name', res, 'Leraar');
+                            }
+                        });
+                }
+                else if (requestBody.result.action == "iSAS.exam") {
+                    var vakken = parameters["Vakken"];
+                    var toets = parameters["Toets"];
+
+                    executeQuery("SELECT e.DateTime, e.Name FROM Exam e INNER JOIN Class c ON e.Class = c.Id INNER JOIN Student s ON c.Id = s.Class INNER JOIN Subject su ON su.Id = e.Subject WHERE s.Id = 1 AND su.Name = '" + vakken + "'",
+                        function (data) {
+                            if (data.recordset[0]) {
+                                speech = "Je " + toets + "(" +  data.recordset[0].Name + ") voor " + vakken + " is op " + data.recordset[0].DateTime;
+                                return getResultText(res, speech);
+                            }
+                            else {
+                                speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN SubjectFulfillment t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
                             }
                         });
                 }
