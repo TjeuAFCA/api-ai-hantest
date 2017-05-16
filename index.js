@@ -34,30 +34,42 @@ function executeQuery(query, callback) {
         });
 }
 
-function getResultText(res, text) {
-    console.log("CHECK THIS");
-    console.log(res.req.body.result.contexts[0]);
-    //console.log("CONTEXTOUT");
-    //console.log(res.contextOut);
-    //contextOut: [{"name":"cijfer-context", "lifespan":5, "parameters":{"city":"Rome"}}],
+function getResultText(res, text, context) {
+    var response = {};
+    if(context){
+        response = {
+            speech: text,
+            displayText: text,
+            contextOut: context,
+            source: 'apiai-webhook-iSAS'
+        }
+    }
+    else{
+        response = {
+            speech: text,
+            displayText: text,
+            source: 'apiai-webhook-iSAS'
+        }
+    }
+    return res.json(response);
+}
 
-
-    return res.json({
-        speech: text,
-        displayText: text,
-        contextOut: [{ "name": "cijfer-context", "parameters": { "Vakken": "OOSE OOAD" }, "lifespan": 5 }],
-        source: 'apiai-webhook-iSAS'
-    });
+function getContext(res, propertyName, replacement){
+    var context =  res.req.body.result.contexts[0];
+    context.parameters[propertyName] = replacement;
+    console.log("DIT IS DE CONTEXT");
+    console.log(context);
+    return context;
 }
 
 function getSuggestion(query, propertyName, res) {
     var speech = "";
+    var context = null;
     executeQuery(query,
         function (data) {
             if (data.recordset[0]) {
                 if (data.recordset.length > 1) {
                     speech = "Bedoelde je misschien ";
-                    res.req.body.result.contexts[0].parameters.Vakken = "OOSE OOAD";
 
                     for (var i = 0; i < data.recordset.length; i++) {
                         speech += data.recordset[i][propertyName];
@@ -73,13 +85,14 @@ function getSuggestion(query, propertyName, res) {
                 }
                 else {
                     speech = "Bedoelde je misschien " + data.recordset[0][propertyName] + "?";
+                    context = getContext(res, propertyName, data.recordset[0][propertyName]);
                 }
             }
             else {
                 speech = "Sorry, deze vraag kan ik niet voor je beantwoorden.."
             }
 
-            return getResultText(res, speech);
+            return getResultText(res, speech, context);
         });
 }
 
