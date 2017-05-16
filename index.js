@@ -57,7 +57,7 @@ function getResultText(res, text, context) {
 function getContext(res, propertyName, replacement){
     var context =  res.req.body.result.contexts[0];
     console.log('THIS IS THE CONTEXT');
-    console.log( res.req.body.result.contexts[0]);
+    console.log( res.req.body.result.contexts);
     context.parameters[propertyName] = replacement;
     return [context];
 }
