@@ -45,7 +45,7 @@ function getResultText(res, text) {
     return res.json({
         speech: text,
         displayText: text,
-        contextOut: [{ "name": "cijfer-context", "parameters": { "Vakken.original": "ooad", "Cijfer": [ "cijfer" ], "Cijfer.original": "cijfer", "Vakken": "OOSE OOAD" }, "lifespan": 5 }],
+        contextOut: [{ "name": "cijfer-context", "parameters": { "Vakken": "OOSE OOAD" }, "lifespan": 5 }],
         source: 'apiai-webhook-iSAS'
     });
 }
