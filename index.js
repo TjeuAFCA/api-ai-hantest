@@ -56,8 +56,6 @@ function getResultText(res, text, context) {
 
 function getContext(res, propertyName, replacement){
     var context =  res.req.body.result.contexts[0];
-    console.log('THIS IS THE CONTEXT');
-    console.log( res.req.body.result.contexts);
     context.parameters[propertyName] = replacement;
     return [context];
 }
@@ -137,6 +135,20 @@ restService.post('/webhook', function (req, res) {
                             }
                             else {
                                 speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
+                            }
+                        });
+                }
+                else if (requestBody.result.action == "iSAS.teacherEmail") {
+                    var leraar = parameters["Leraar"];
+
+                    executeQuery("SELECT t.email FROM Teacher t WHERE t.Name LIKE '%" + leraar + "%'",
+                        function (data) {
+                            if (data.recordset[0]) {
+                                speech = "Het e-mailadres van " + leraar + " is " + data.recordset[0].email;
+                                return getResultText(res, speech);
+                            }
+                            else {
+                                //speech = getSuggestion("SELECT s.Name From Subject s INNER JOIN Test t ON s.Id = t.Subject INNER JOIN Student st ON t.Class = st.Class WHERE st.Id = 1 AND s.Name LIKE '%" + vakken + "%'", 'Name', res, 'Vakken');
                             }
                         });
                 }
