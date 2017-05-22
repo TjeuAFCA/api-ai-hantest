@@ -120,7 +120,10 @@ restService.post('/webhook', function (req, res) {
                                     speech = "Je laatste cijfers van " + vakken + " zijn: ";
                                     console.log(data.recordset);
                                     for(var i = 0; i<data.recordset.length; i++){
-                                        speech += data.recordset[i].Name + ": " + data.recordset[i].Value + " - ";
+                                        speech += data.recordset[i].Name + ": " + data.recordset[i].Value;
+                                        if(i !== data.recordset.length -1){
+                                            speech += " - ";
+                                        }
                                     }
                                 }
                                 else{
