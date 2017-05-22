@@ -117,7 +117,10 @@ restService.post('/webhook', function (req, res) {
                         function (data) {
                             if (data.recordset[0]) {
                                 if (data.recordset.length > 1) {
-                                    speech = "harde porno";
+                                    speech = "Je laatste cijfers van " + vakken + " zijn: \r\n";
+                                    for(var i = 0; i<data.recordset.length; i++){
+                                        speech += data.recordset[i].Name + ": " + data.recordset[0].Value + "\r\n";
+                                    }
                                 }
                                 else{
                                     speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
