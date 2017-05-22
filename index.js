@@ -113,10 +113,15 @@ restService.post('/webhook', function (req, res) {
                     var cijfer = parameters["Cijfer"];
                     var vakken = parameters["Vakken"];
 
-                    executeQuery("SELECT Value FROM Mark m INNER JOIN Subject s ON m.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1 ",
+                    executeQuery("SELECT m.Value, e.Name FROM Mark m INNER JOIN Exam e ON m.Exam = e.Id INNER JOIN Subject s ON e.Subject = s.Id WHERE s.Name = '" + vakken + "' AND m.Student = 1",
                         function (data) {
                             if (data.recordset[0]) {
-                                speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                                if (data.recordset.length > 1) {
+                                    speech = "harde porno";
+                                }
+                                else{
+                                    speech = "Jouw " + cijfer + " voor " + vakken + " is een " + data.recordset[0].Value;
+                                }
                                 return getResultText(res, speech);
                             }
                             else {
