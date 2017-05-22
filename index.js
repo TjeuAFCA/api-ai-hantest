@@ -118,8 +118,9 @@ restService.post('/webhook', function (req, res) {
                             if (data.recordset[0]) {
                                 if (data.recordset.length > 1) {
                                     speech = "Je laatste cijfers van " + vakken + " zijn: \r\n";
+                                    console.log(data.recordset);
                                     for(var i = 0; i<data.recordset.length; i++){
-                                        speech += data.recordset[i].Name + ": " + data.recordset[0].Value + "\r\n";
+                                        speech += data.recordset[i].Name + ": " + data.recordset[i].Value + "\r\n";
                                     }
                                 }
                                 else{
