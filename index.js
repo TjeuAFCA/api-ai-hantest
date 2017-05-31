@@ -4,9 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sql = require('mssql');
 const config = {
-    user: 'thomaszee',
-    password: 'Korilu5!',
-    server: 'isaschatbot.database.windows.net', // You can use 'localhost\\instance' to connect to named instance 
+    user: 'thomas',
+    password: 'Mokjes55',
+    server: 'nots-thomas.database.windows.net', // You can use 'localhost\\instance' to connect to named instance
     database: 'isaschatbot',
     options: {
         encrypt: true
