@@ -88,7 +88,8 @@ function getSuggestion(query, propertyName, res, action) {
                 }
             }
             else {
-                speech = "Sorry, deze vraag kan ik niet voor je beantwoorden.."
+                speech = "Sorry, deze vraag kan ik niet voor je beantwoorden..";
+                return null;
             }
 
             return getResultText(res, speech, context);
